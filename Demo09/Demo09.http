@@ -1,0 +1,8 @@
+@Demo09_HostAddress = http://localhost:5152
+
+GET {{Demo09_HostAddress}}/api/students
+Accept: application/json
+
+###
+GET {{Demo09_HostAddress}}/api/students/4
+Accept: application/json
