@@ -8,23 +8,37 @@ namespace Demo09.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        StudentDao studentDao = new StudentDao();
-
         //Appel du service : GET /api/students
         [HttpGet]
         public IActionResult GetAllStudents()
         {
-            return Ok(studentDao.Students);
+            return Ok(StudentDao.Students);
         }
 
         //Appel du service : GET /api/students/{id}
         [HttpGet("{id}")]
         public IActionResult GetOnStudent([FromRoute] int id)
         {
-            var student = studentDao.Students.FirstOrDefault(s  => s.Id == id);
+            var student = StudentDao.Students.FirstOrDefault(s  => s.Id == id);
             if (student == null)
                 return NotFound("Aucun étudiant avec cet id n'est trouvé");
             return Ok(student);
         }
+
+
+        [HttpPost]
+        public IActionResult AddNewStudent([FromBody] Student student)
+        {
+            if (student == null)
+                return BadRequest("Problème de lecture de données du nouvel étudiant");
+
+            //générer le nouvel id de cet étudian
+            int newId = StudentDao.Students.Last().Id + 1;
+            student.Id = newId;
+            StudentDao.Students.Add(student);
+            
+            return Created($"GET /api/students/{newId}", student);
+        }
+
     }
 }

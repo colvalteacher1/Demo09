@@ -6,3 +6,10 @@ Accept: application/json
 ###
 GET {{Demo09_HostAddress}}/api/students/4
 Accept: application/json
+
+###
+POST {{Demo09_HostAddress}}/api/students
+Content-Type: application/json
+{
+    "name": "Marie Tremblay"
+}
